@@ -1,22 +1,27 @@
-# Next.js example
+# Windows industry scheduler
 
-## How to use
+### Available Scripts
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
+In the project directory, you can run:
 
-```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/nextjs
-cd nextjs
-```
+#### `yarn`
 
-Install it and run:
+Installs all necessary packages to run the app.
 
-```sh
-npm install
-npm run dev
-```
+#### `yarn dev`
 
-## The idea behind the example
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-[Next.js](https://github.com/zeit/next.js) is a framework for server-rendered React apps.
-# Windows-industry-scheduler
+The page will reload if you make edits.<br>
+You will also see any errors in the console.
+
+#### `yarn build`
+
+Builds the app for production to the `.next` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+#### `yarn start`
+
+Starts the application in production mode.
+The application should be compiled with \`next build\` first.

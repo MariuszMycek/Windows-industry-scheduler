@@ -5,8 +5,10 @@ import moment from 'moment';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Card from './Card';
+import Chip from './Chip';
 
 import Fade from '@material-ui/core/Fade';
 
@@ -14,12 +16,26 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
   },
+  addButtonWrapper: {
+    position: 'absolute',
+    right: 0,
+    top: 4,
+  },
   button: {
-    margin: theme.spacing(1),
+    margin: 0,
+    minWidth: 140,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
+  },
+  summaryContent: {
+    margin: 0,
+    position: 'relative',
+  },
+  dayInfo: {
+    margin: '12px 0',
+    width: 60,
   },
   weekend: {
     color: '#E53935',
@@ -32,6 +48,14 @@ const useStyles = makeStyles(theme => ({
   weekDay: {
     marginLeft: '0.2em',
     textTransform: 'uppercase',
+  },
+  chips: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  cards: {
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   panel: {
     background: '#FAFAFA',
@@ -49,6 +73,9 @@ export default function SimpleExpansionPanel(props) {
     expandedDays,
     handlePanelsExpand,
     monthVisible,
+    daysWithCards,
+    addCard,
+    cards,
   } = props;
 
   const days = () => {
@@ -65,7 +92,15 @@ export default function SimpleExpansionPanel(props) {
         return false;
       };
 
-      const isExpanded = expandedDays.includes(`${i + 1} ${actualMonth}`);
+      const dayName = `${i + 1} ${actualMonth}`;
+
+      const isExpanded = expandedDays.includes(dayName);
+
+      const hasCards = daysWithCards.find(day => day.dayName === dayName);
+
+      const cardsData = hasCards
+        ? hasCards.cards.map(cardId => cards.find(card => card.id === cardId))
+        : [];
 
       days.push(
         <ExpansionPanel
@@ -76,20 +111,47 @@ export default function SimpleExpansionPanel(props) {
         >
           <ExpansionPanelSummary
             className={isWeekend() ? classes.weekend : null}
+            classes={{ content: classes.summaryContent }}
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${i}a-content`}
             id={`panel${i}a-header`}
           >
-            <span className={classes.dayNumber}>{i + 1}</span>
-            <span>|</span>
-            <span className={classes.weekDay}>{weekDay}</span>
+            <div className={classes.dayInfo}>
+              <span className={classes.dayNumber}>{i + 1}</span>
+              <span>|</span>
+              <span className={classes.weekDay}>{weekDay}</span>
+            </div>
+            <Fade in={!isExpanded} unmountOnExit>
+              <div className={classes.chips}>
+                {cardsData.map(cardData => (
+                  <Chip key={cardData.id} title={cardData.title} />
+                ))}
+              </div>
+            </Fade>
+            <Fade in={isExpanded} unmountOnExit>
+              <div className={classes.addButtonWrapper}>
+                <Button
+                  onClick={e => {
+                    e.stopPropagation();
+                    addCard(dayName);
+                  }}
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Dodaj
+                </Button>
+              </div>
+            </Fade>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <Fade in={isExpanded} unmountOnExit>
+              <div className={classes.cards}>
+                {cardsData.map(cardData => (
+                  <Card key={cardData.id} cardData={cardData} />
+                ))}
+              </div>
+            </Fade>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       );

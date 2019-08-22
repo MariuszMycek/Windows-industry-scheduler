@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TopBar from './TopBar';
 import Month from './Month';
+import uuid from 'uuid/v1';
 
 import moment from 'moment';
 
@@ -15,6 +16,8 @@ class App extends Component {
       monthDiff: 0,
       expandedDays: [],
       monthVisible: true,
+      daysWithCards: [],
+      cards: [],
     };
   }
 
@@ -28,6 +31,39 @@ class App extends Component {
       daysInMonth: moment(state.actualMonth, 'MMMM[ ]YYYY').daysInMonth(),
     }));
   }
+
+  addCard = dayName => {
+    const cardId = uuid();
+    const newCard = {
+      id: cardId,
+      title: 'new Card',
+    };
+    this.setState({ cards: [...this.state.cards, newCard] });
+    this.addCardToDay(dayName, cardId);
+  };
+
+  addCardToDay = (dayName, cardId) => {
+    const isDayInArray = this.state.daysWithCards.some(
+      day => day.dayName === dayName
+    );
+    if (isDayInArray) {
+      const newDaysWithCards = this.state.daysWithCards.map(day => {
+        if (day.dayName === dayName) {
+          return { ...day, cards: [...day.cards, cardId] };
+        }
+        return day;
+      });
+      this.setState({ daysWithCards: newDaysWithCards });
+    } else {
+      const newDay = {
+        dayName,
+        cards: [cardId],
+      };
+      this.setState({
+        daysWithCards: [...this.state.daysWithCards, newDay],
+      });
+    }
+  };
 
   handlePanelsExpand = panel => (event, expanded) => {
     this.setState({
@@ -73,7 +109,11 @@ class App extends Component {
           collapseAllPanels={this.collapseAllPanels}
           {...this.state}
         />
-        <Month {...this.state} handlePanelsExpand={this.handlePanelsExpand} />
+        <Month
+          {...this.state}
+          handlePanelsExpand={this.handlePanelsExpand}
+          addCard={this.addCard}
+        />
       </div>
     );
   }

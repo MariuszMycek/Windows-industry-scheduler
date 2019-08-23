@@ -28,7 +28,7 @@ const Layout = props => {
         root: classes.root,
       }}
     >
-      <div className={classes.content}> {children}</div>
+      <div className={classes.content}>{children}</div>
       <Footer />
     </Container>
   );

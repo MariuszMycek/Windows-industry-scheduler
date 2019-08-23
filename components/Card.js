@@ -1,51 +1,101 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import CardMenu from './CardMenu';
 
 const useStyles = makeStyles({
+  root: {
+    padding: 10,
+    width: '25%',
+  },
   card: {
-    minWidth: 275,
+    width: '100%',
   },
-
-  title: {
-    fontSize: 14,
+  infoItem: {
+    borderTop: '1px solid #EDEDED',
+    margin: 0,
+    padding: '0.5em 0',
+    '&:last-child': {
+      borderBottom: '1px solid #EDEDED',
+    },
   },
-  pos: {
-    marginBottom: 12,
+  name: {},
+  serviceType: styleProps => ({
+    color: styleProps.serviceType === 'montaż' ? 'red' : 'blue',
+  }),
+  address: {},
+  desc: {
+    fontWeight: 'bold',
+    marginLeft: '1em',
+  },
+  actions: {
+    justifyContent: 'flex-end',
+    paddingRight: 16,
+    paddingTop: 0,
+  },
+  additionalInfoText: {
+    display: 'block',
+    fontWeight: '500',
   },
 });
 
 const SimpleCard = props => {
-  const classes = useStyles();
+  const serviceType = 'montaż';
+  const styleProps = {
+    serviceType: serviceType,
+  };
+  const classes = useStyles(styleProps);
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  function handleExpandClick() {
+    setExpanded(!expanded);
+  }
 
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          Word of the Day
-        </Typography>
-        <Typography variant="h5" component="h2">
-          be
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    <div className={classes.root}>
+      <Card className={classes.card}>
+        <CardContent>
+          <h3 className={classes.name}>
+            Klient:<span className={classes.desc}>Jan Kowalski</span>
+          </h3>
+          <div className={classes.info}>
+            <p className={classes.infoItem}>
+              Adres:
+              <span className={classes.desc}>Mogilska 12/298</span>
+            </p>
+            <p className={classes.infoItem}>
+              Telefon:
+              <span className={classes.desc}>123 465 654</span>
+            </p>
+            <p className={classes.infoItem}>
+              Rodzaj usługi:
+              <span className={`${classes.desc} ${classes.serviceType}`}>
+                Dostawa
+              </span>
+            </p>
+            {serviceType === 'montaż' ? (
+              <p className={classes.infoItem}>
+                Rodzaj montażu:<span className={classes.desc}>Szwedzkie</span>
+              </p>
+            ) : null}
+            <p className={classes.infoItem}>
+              Dodatkowe informacje:
+              <span className={classes.additionalInfoText}>
+                Lorem ipsum dolor sit amet
+              </span>
+            </p>
+          </div>
+        </CardContent>
+        <CardActions classes={{ root: classes.actions }}>
+          <CardMenu {...props} />
+        </CardActions>
+      </Card>
+    </div>
   );
 };
 

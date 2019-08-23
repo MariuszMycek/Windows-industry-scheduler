@@ -33,12 +33,15 @@ const useStyles = makeStyles(theme => ({
     margin: 0,
     position: 'relative',
   },
+  detailsRoot: {
+    paddingTop: 0,
+  },
   dayInfo: {
     margin: '12px 0',
     width: 60,
   },
   weekend: {
-    color: '#E53935',
+    color: theme.palette.error.main,
   },
   dayNumber: {
     minWidth: 20,
@@ -56,12 +59,13 @@ const useStyles = makeStyles(theme => ({
   cards: {
     display: 'flex',
     flexWrap: 'wrap',
+    width: '100%',
   },
   panel: {
-    background: '#FAFAFA',
+    background: theme.palette.grey[50],
   },
   panelExpanded: {
-    background: '#EDEDED',
+    background: theme.palette.grey[200],
   },
 }));
 
@@ -76,6 +80,7 @@ export default function SimpleExpansionPanel(props) {
     daysWithCards,
     addCard,
     cards,
+    removeCardFromDay,
   } = props;
 
   const days = () => {
@@ -144,11 +149,16 @@ export default function SimpleExpansionPanel(props) {
               </div>
             </Fade>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
             <Fade in={isExpanded} unmountOnExit>
               <div className={classes.cards}>
                 {cardsData.map(cardData => (
-                  <Card key={cardData.id} cardData={cardData} />
+                  <Card
+                    key={cardData.id}
+                    cardData={cardData}
+                    removeCardFromDay={removeCardFromDay}
+                    dayName={dayName}
+                  />
                 ))}
               </div>
             </Fade>

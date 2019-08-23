@@ -42,6 +42,32 @@ class App extends Component {
     this.addCardToDay(dayName, cardId);
   };
 
+  removeCard = cardId => {
+    const newCards = this.state.cards.filter(card => card.id !== cardId);
+    this.setState({ cards: newCards });
+  };
+
+  removeCardFromDay = (dayName, cardId) => {
+    const newDaysWithCards = this.state.daysWithCards.map(day => {
+      if (day.dayName === dayName) {
+        const newCards = day.cards.filter(card => card !== cardId);
+
+        return { ...day, cards: newCards };
+      }
+      return day;
+    });
+    this.setState({ daysWithCards: newDaysWithCards });
+    this.removeCard(cardId);
+    // this.removeEmptyDayFromDayWithCards();
+  };
+
+  // removeEmptyDayFromDayWithCards = () => {
+  //   const newDaysWithCards = this.state.daysWithCards.filter(
+  //     day => day.cards !== 0
+  //   );
+  //   this.setState(() => ({ daysWithCards: newDaysWithCards }));
+  // };
+
   addCardToDay = (dayName, cardId) => {
     const isDayInArray = this.state.daysWithCards.some(
       day => day.dayName === dayName
@@ -112,6 +138,7 @@ class App extends Component {
         <Month
           {...this.state}
           handlePanelsExpand={this.handlePanelsExpand}
+          removeCardFromDay={this.removeCardFromDay}
           addCard={this.addCard}
         />
       </div>

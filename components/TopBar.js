@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     zIndex: 100,
     transition: 'all 0.5s linear',
-    width: '100%',
+    width: '100vw',
     left: 0,
   },
   button: {

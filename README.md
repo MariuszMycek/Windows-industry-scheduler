@@ -1,5 +1,7 @@
 # Windows industry scheduler
 
+## [Latest deploy(still demo)](https://window-scheduler.mmycek83.now.sh)
+
 ### Available Scripts
 
 In the project directory, you can run:

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
-import ExpansionPanel from './ExpansionPanel';
+import Days from './Days';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 15,
+    marginTop: 85,
   },
   button: {
     margin: theme.spacing(1),
@@ -23,7 +23,7 @@ const Month = props => {
   return (
     <div>
       <Paper className={classes.root}>
-        <ExpansionPanel {...props} />
+        <Days {...props} />
       </Paper>
     </div>
   );

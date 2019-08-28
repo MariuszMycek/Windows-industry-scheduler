@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flex: '1 0 auto',
-    marginTop: 55,
     marginBottom: 15,
   },
 }));
@@ -28,7 +27,7 @@ const Layout = props => {
         root: classes.root,
       }}
     >
-      <div className={classes.content}> {children}</div>
+      <div className={classes.content}>{children}</div>
       <Footer />
     </Container>
   );

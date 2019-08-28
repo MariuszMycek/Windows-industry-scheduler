@@ -7,20 +7,32 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Link from 'next/link';
 
 const useStyles = makeStyles(theme => ({
-  background: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
   root: {
     position: 'fixed',
     top: 0,
     zIndex: 100,
     transition: 'all 0.5s linear',
-    width: '100%',
+    width: '100vw',
     left: 0,
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 8,
+    left: 12,
+  },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: 64,
+  },
+  paper: {
+    background: theme.palette.grey[200],
   },
   button: {
     margin: theme.spacing(1),
@@ -31,6 +43,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: 16,
     minWidth: 150,
     textAlign: 'center',
+    background: '#fff',
+    height: '36px',
+    lineHeight: '36px',
+    borderRadius: 4,
   },
 }));
 
@@ -40,8 +56,15 @@ const TopBar = props => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Paper square elevation={4}>
-        <Container maxWidth="lg" classes={{ root: classes.background }}>
+      <div className={classes.menuButton}>
+        <Link href="/">
+          <IconButton color="primary" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+        </Link>
+      </div>
+      <Paper square elevation={4} classes={{ root: classes.paper }}>
+        <Container maxWidth="lg" classes={{ root: classes.toolbar }}>
           <Button
             onClick={() => changeMonth(-1)}
             variant="contained"

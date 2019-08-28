@@ -7,13 +7,13 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: 0,
     display: 'flex',
-    height: '100vh',
+    minHeight: '100vh',
     flexDirection: 'column',
   },
   content: {
     flex: '1 0 auto',
     marginBottom: 15,
-  },
+    },
 }));
 
 const Layout = props => {

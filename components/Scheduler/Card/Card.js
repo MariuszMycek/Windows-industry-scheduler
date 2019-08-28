@@ -12,6 +12,7 @@ const useStyles = makeStyles({
   },
   card: {
     width: '100%',
+    backgroundImage: 'url(static/images/lightpaperfibers.png)',
   },
   actions: {
     justifyContent: 'flex-end',

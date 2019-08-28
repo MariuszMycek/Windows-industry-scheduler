@@ -24,6 +24,12 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 8,
     left: 12,
+    color: '#fff',
+  },
+  iconButton: {
+    '&:hover': {
+      background: 'rgba(255, 255, 255, 0.30)',
+    },
   },
   toolbar: {
     display: 'flex',
@@ -32,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     height: 64,
   },
   paper: {
-    background: theme.palette.grey[200],
+    background: 'rgba(0, 0, 0, 0.45)',
   },
   button: {
     margin: theme.spacing(1),
@@ -58,7 +64,11 @@ const TopBar = props => {
     <div className={classes.root}>
       <div className={classes.menuButton}>
         <Link href="/">
-          <IconButton color="primary" aria-label="menu">
+          <IconButton
+            color="inherit"
+            aria-label="menu"
+            classes={{ root: classes.iconButton }}
+          >
             <MenuIcon />
           </IconButton>
         </Link>

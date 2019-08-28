@@ -23,10 +23,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 0,
   },
   panel: {
-    background: theme.palette.grey[50],
-  },
-  panelExpanded: {
-    background: theme.palette.grey[200],
+    background: '#f5ffff',
   },
   currentDay: {
     boxShadow: '0px 0px 3px 0px #ab47bc, inset 0px 0px 8px 0px #ab47bc',
@@ -43,11 +40,7 @@ const Day = props => {
       expanded={isExpanded}
       onChange={handlePanelsExpand(dayName)}
       classes={{
-        root: clsx(
-          classes.panel,
-          { [classes.panelExpanded]: isExpanded },
-          { [classes.currentDay]: isToday }
-        ),
+        root: clsx(classes.panel, { [classes.currentDay]: isToday }),
       }}
     >
       <ExpansionPanelSummary

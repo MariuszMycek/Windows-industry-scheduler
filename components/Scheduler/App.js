@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TopBar from './TopBar';
 import Month from './Month';
+import UniversalDialog from '../UniversalDialog';
 import uuid from 'uuid/v1';
 
 import moment from 'moment';
@@ -10,7 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      actualDate: '',
+      currentDate: '',
       actualMonth: '',
       daysInMonth: 0,
       monthDiff: 0,
@@ -18,13 +19,17 @@ class App extends Component {
       monthVisible: true,
       daysWithCards: [],
       cards: [],
+      dialogOpened: false,
+      activeDay: '',
+      dialogContent: '',
+      editedCardData: null,
     };
   }
 
   componentDidMount() {
     moment.locale('pl');
     this.setState({
-      actualDate: moment().format('MMMM[ ]YYYY'),
+      currentDate: moment().format('D[ ]MMMM[ ]YYYY'),
       actualMonth: moment().format('MMMM[ ]YYYY'),
     });
     this.setState(state => ({
@@ -32,14 +37,42 @@ class App extends Component {
     }));
   }
 
-  addCard = dayName => {
+  editCard = cardData => {
+    this.setState({ editedCardData: cardData });
+    this.handleDialogOpen('CardInputForm');
+  };
+
+  updateCard = values => {
+    const updatedCards = this.state.cards.map(card => {
+      if (card.id === this.state.editedCardData.id) {
+        const updatedCard = { ...values };
+        return updatedCard;
+      }
+      return card;
+    });
+
+    this.setState({ cards: [...updatedCards] });
+    this.setState(() => ({ editedCardData: null }));
+  };
+
+  handleDialogOpen = content =>
+    this.setState({ dialogOpened: true, dialogContent: content });
+
+  handleDialogClose = () => this.setState({ dialogOpened: false });
+
+  displayAddCardForm = dayName => {
+    this.handleDialogOpen('CardInputForm');
+    this.setState({ activeDay: dayName });
+  };
+
+  addCard = values => {
     const cardId = uuid();
     const newCard = {
       id: cardId,
-      title: 'new Card',
+      ...values,
     };
     this.setState({ cards: [...this.state.cards, newCard] });
-    this.addCardToDay(dayName, cardId);
+    this.addCardToDay(this.state.activeDay, cardId);
   };
 
   removeCard = cardId => {
@@ -139,7 +172,17 @@ class App extends Component {
           {...this.state}
           handlePanelsExpand={this.handlePanelsExpand}
           removeCardFromDay={this.removeCardFromDay}
+          displayAddCardForm={this.displayAddCardForm}
+          handleDialogClose={this.handleDialogClose}
+          editCard={this.editCard}
+        />
+        <UniversalDialog
+          dialogOpened={this.state.dialogOpened}
+          handleDialogClose={this.handleDialogClose}
           addCard={this.addCard}
+          dialogContent={this.state.dialogContent}
+          editedCardData={this.state.editedCardData}
+          updateCard={this.updateCard}
         />
       </div>
     );

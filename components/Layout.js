@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flex: '1 0 auto',
-    marginTop: 55,
     marginBottom: 15,
   },
 }));

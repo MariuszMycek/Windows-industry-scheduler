@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { colorsForServices } from 'utils/colorsForServices';
 import CardContent from '@material-ui/core/CardContent';
 import clsx from 'clsx';
 
@@ -14,28 +15,15 @@ const useStyles = makeStyles(theme => ({
   },
   name: {},
   serviceType: styleProps => {
-    const { avatars, common } = theme.palette;
     const { service } = styleProps;
-    const serviceStyles = {
-      color: service === 'Inne' ? null : common.white,
-      backgroundColor: avatars.lightGrey,
+    const serviceColor = colorsForServices(service);
+
+    return {
+      color: serviceColor.color,
+      backgroundColor: serviceColor.backgroundColor,
       borderRadius: 11,
       padding: '3px 7px',
     };
-    switch (service) {
-      case 'Montaż PCV':
-        serviceStyles.backgroundColor = avatars.blue;
-        break;
-      case 'Montaż ALU':
-        serviceStyles.backgroundColor = avatars.red;
-        break;
-      case 'Montaż ZABUDOWA':
-        serviceStyles.backgroundColor = avatars.green;
-        break;
-      case 'Dostawa':
-        serviceStyles.backgroundColor = avatars.darkGrey;
-    }
-    return serviceStyles;
   },
   address: {},
   desc: {

@@ -16,17 +16,10 @@ const theme = createMuiTheme({
     background: {
       default: '#fff',
     },
-    chips: {
+    serviceColor: {
       red: red[100],
       blue: blue[100],
       green: green[100],
-      darkGrey: grey[600],
-      lightGrey: grey[300],
-    },
-    avatars: {
-      red: red[700],
-      blue: blue[700],
-      green: green[700],
       darkGrey: grey[600],
       lightGrey: grey[300],
     },

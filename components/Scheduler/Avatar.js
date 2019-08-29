@@ -1,37 +1,20 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { colorsForServices } from 'utils/colorsForServices';
 import Avatar from '@material-ui/core/Avatar';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const useStyles = makeStyles(theme => ({
   avatar: styleProps => {
-    const { common, avatars, text } = theme.palette;
     const { service } = styleProps;
-    console.log(theme);
+    const serviceColor = colorsForServices(service);
 
-    const avatarStyle = {
+    return {
       width: 32,
       height: 32,
-      backgroundColor: avatars.darkGrey,
-      color: service === 'Dostawa' ? text.primary : common.white,
+      backgroundColor: serviceColor.backgroundColor,
+      color: serviceColor.color,
     };
-    switch (service) {
-      case 'Montaż PCV':
-        avatarStyle.backgroundColor = avatars.blue;
-        break;
-
-      case 'Montaż ALU':
-        avatarStyle.backgroundColor = avatars.red;
-        break;
-
-      case 'Montaż ZABUDOWA':
-        avatarStyle.backgroundColor = avatars.green;
-        break;
-
-      case 'Dostawa':
-        avatarStyle.backgroundColor = avatars.lightGrey;
-    }
-    return avatarStyle;
   },
 }));
 

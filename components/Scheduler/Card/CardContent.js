@@ -5,6 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(theme => ({
+  contentRoot: {
+    marginTop: 5,
+  },
   infoItem: {
     borderTop: '1px solid #EDEDED',
     margin: 0,
@@ -53,7 +56,7 @@ const Content = props => {
   const classes = useStyles(styleProps);
 
   return (
-    <CardContent>
+    <CardContent classes={{ root: classes.contentRoot }}>
       <h3 className={classes.name}>
         Klient:<span className={classes.desc}>{name}</span>
       </h3>

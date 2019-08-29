@@ -9,6 +9,17 @@ const useStyles = makeStyles({
   root: {
     padding: 10,
     width: '25%',
+    position: 'relative',
+  },
+  pinWrapper: {
+    position: 'absolute',
+    left: '46%',
+    top: 0,
+    transform: 'translateX(-50%)',
+    width: 52,
+    '& img': {
+      width: '100%',
+    },
   },
   card: {
     width: '100%',
@@ -28,6 +39,9 @@ const SimpleCard = props => {
 
   return (
     <div className={classes.root}>
+      <div className={classes.pinWrapper}>
+        <img src="static/images/pin-yellow.png" alt="pin" />
+      </div>
       <Card className={classes.card}>
         <CardContent {...cardData} />
         <CardActions classes={{ root: classes.actions }}>

@@ -1,36 +1,20 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { colorsForServices } from 'utils/colorsForServices';
 import Chip from '@material-ui/core/Chip';
 import Avatar from './Avatar';
 
 const useStyles = makeStyles(theme => ({
   chip: styleProps => {
-    const { chips, common } = theme.palette;
     const { service } = styleProps;
+    const serviceColor = colorsForServices(service);
 
-    const chipStyle = {
+    return {
       margin: 5,
       fontSize: 16,
-      backgroundColor: chips.lightGrey,
-      color: service === 'Dostawa' ? common.white : null,
+      backgroundColor: serviceColor.backgroundColor,
+      color: serviceColor.color,
     };
-    switch (service) {
-      case 'Montaż PCV':
-        chipStyle.backgroundColor = chips.blue;
-        break;
-
-      case 'Montaż ALU':
-        chipStyle.backgroundColor = chips.red;
-        break;
-
-      case 'Montaż ZABUDOWA':
-        chipStyle.backgroundColor = chips.green;
-        break;
-
-      case 'Dostawa':
-        chipStyle.backgroundColor = chips.darkGrey;
-    }
-    return chipStyle;
   },
 }));
 

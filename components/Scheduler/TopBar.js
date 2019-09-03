@@ -1,6 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  changeMonth,
+  handleMonthVisible,
+  collapseAllPanelsInMonth,
+} from 'actions/schedulerActions';
 
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -56,8 +61,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TopBar = props => {
-  const { actualMonth, changeMonth, collapseAllPanels } = props;
+const TopBar = () => {
+  const { actualMonth } = useSelector(state => state.scheduler);
+  const dispatch = useDispatch();
+
+  const handleChangeMonth = val => {
+    dispatch(handleMonthVisible(false));
+    setTimeout(() => {
+      dispatch(changeMonth(val));
+    }, 150);
+    setTimeout(() => {
+      dispatch(handleMonthVisible(true));
+    }, 300);
+  };
 
   const classes = useStyles();
   return (
@@ -76,7 +92,7 @@ const TopBar = props => {
       <Paper square elevation={4} classes={{ root: classes.paper }}>
         <Container maxWidth="lg" classes={{ root: classes.toolbar }}>
           <Button
-            onClick={() => changeMonth(-1)}
+            onClick={() => handleChangeMonth(-1)}
             variant="contained"
             color="primary"
             className={classes.button}
@@ -86,7 +102,7 @@ const TopBar = props => {
           </Button>
           <span className={classes.monthName}>{actualMonth}</span>
           <Button
-            onClick={() => changeMonth(1)}
+            onClick={() => handleChangeMonth(1)}
             variant="contained"
             color="primary"
             className={classes.button}
@@ -95,7 +111,7 @@ const TopBar = props => {
             <ArrowRightIcon />
           </Button>
           <Button
-            onClick={() => collapseAllPanels(actualMonth)}
+            onClick={() => dispatch(collapseAllPanelsInMonth(actualMonth))}
             variant="contained"
             color="secondary"
             className={classes.button}
@@ -106,11 +122,6 @@ const TopBar = props => {
       </Paper>
     </div>
   );
-};
-
-TopBar.propTypes = {
-  changeMonth: PropTypes.func,
-  actualMonth: PropTypes.string,
 };
 
 export default TopBar;

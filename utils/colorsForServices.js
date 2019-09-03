@@ -1,4 +1,4 @@
-import theme from '../src/theme';
+import theme from './theme';
 
 export function colorsForServices(service) {
   const { common, serviceColor } = theme.palette;

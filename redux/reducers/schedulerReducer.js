@@ -38,7 +38,6 @@ export default function scheduler(state = initialState, action) {
       const newMonth = moment(state.actualMonth, 'MMMM[ ]YYYY')
         .add(action.val, 'months')
         .format('MMMM[ ]YYYY');
-      console.log(newMonth);
       return { ...state, actualMonth: newMonth };
     }
 

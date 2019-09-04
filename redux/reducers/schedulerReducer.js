@@ -17,8 +17,11 @@ import {
 } from 'actions/schedulerActions';
 
 // Initial State
+moment.locale('pl');
+const initialActualMonth = moment().format('MMMM[ ]YYYY');
+
 const initialState = {
-  actualMonth: moment().format('MMMM[ ]YYYY'),
+  actualMonth: initialActualMonth,
   monthVisible: true,
   expandedDays: [],
   dialogOpened: false,
@@ -35,6 +38,7 @@ export default function scheduler(state = initialState, action) {
       const newMonth = moment(state.actualMonth, 'MMMM[ ]YYYY')
         .add(action.val, 'months')
         .format('MMMM[ ]YYYY');
+      console.log(newMonth);
       return { ...state, actualMonth: newMonth };
     }
 

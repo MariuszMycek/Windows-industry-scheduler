@@ -1,14 +1,15 @@
 # Windows industry scheduler
 
-## [Latest deploy(still demo)](https://window-scheduler.mmycek83.now.sh)
+## [Latest deploy(still demo)](https://window-scheduler.herokuapp.com/scheduler)
 
-### Main technologies: 
+### Main technologies:
+
 - Next.js,
 - React (hooks),
 - Redux (react-redux hooks),
-- others: Material-UI, Moment.js, 
- 
-### Available Scripts
+- others: Material-UI, Moment.js,
+
+### Available Scripts`
 
 In the project directory, you can run:
 

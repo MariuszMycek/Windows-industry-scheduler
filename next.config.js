@@ -11,6 +11,9 @@ module.exports = {
       utils: path.resolve(__dirname, 'utils'),
       styles: path.resolve(__dirname, 'styles'),
       components: path.resolve(__dirname, 'components'),
+      actions: path.resolve(__dirname, 'redux/actions'),
+      reducers: path.resolve(__dirname, 'redux/reducers'),
+      
     };
     return config;
   },

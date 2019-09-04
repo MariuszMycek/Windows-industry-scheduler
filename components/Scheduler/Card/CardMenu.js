@@ -1,4 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import {
+  removeCard,
+  removeCardFromDay,
+  editCard,
+  showAddCardForm,
+} from 'actions/schedulerActions';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -22,13 +30,16 @@ const useStyles = makeStyles(theme => {
 });
 
 const CardMenu = props => {
-  const { removeCardFromDay, cardData, dayName, editCard } = props;
-  const { service, confirmed, reserved } = props.cardData;
+  const { cardData, dayName } = props;
+  const { service, confirmed, reserved } = cardData;
   const avatarProps = {
     service,
     confirmed,
     reserved,
   };
+
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -42,11 +53,13 @@ const CardMenu = props => {
   }
 
   function deleteCard() {
-    removeCardFromDay(dayName, cardData.id);
+    dispatch(removeCardFromDay(dayName, cardData.id));
+    dispatch(removeCard(cardData.id));
     handleClose();
   }
   function handleEditCard() {
-    editCard(cardData);
+    dispatch(editCard(cardData));
+    dispatch(showAddCardForm(dayName));
     handleClose();
   }
 
@@ -78,6 +91,11 @@ const CardMenu = props => {
       </Menu>
     </div>
   );
+};
+
+CardMenu.propTypes = {
+  cardData: PropTypes.object.isRequired,
+  dayName: PropTypes.string.isRequired,
 };
 
 export default CardMenu;

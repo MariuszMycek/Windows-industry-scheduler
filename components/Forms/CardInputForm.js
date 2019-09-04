@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  hideAddCardForm,
+  addCard,
+  addCardToDay,
+  updateCard,
+} from 'actions/schedulerActions';
+import uuid from 'uuid/v1';
+import { SERVICES, MONTAGES_PCV, MONTAGES_ALU } from 'utils/constants';
+
 import {
   Card,
   CardHeader,
@@ -27,18 +36,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const CardInputForm = props => {
-  const {
-    className,
-    handleDialogClose,
-    addCard,
-    dialogOpened,
-    editedCardData,
-    updateCard,
-    ...rest
-  } = props;
-
+const CardInputForm = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { activeDay, editedCardData, dialogOpened } = useSelector(
+    state => state.scheduler
+  );
 
   const [values, setValues] = useState(() => {
     if (editedCardData) {
@@ -85,75 +88,20 @@ const CardInputForm = props => {
   const handleSubmit = () => {
     if (dialogOpened && isValid()) {
       if (editedCardData) {
-        updateCard({ ...values });
+        dispatch(updateCard({ ...values }));
       } else {
-        addCard({ ...values });
+        const cardId = uuid();
+        dispatch(addCard({ ...values, id: cardId }));
+        dispatch(addCardToDay(activeDay, cardId));
       }
-      handleDialogClose();
+      dispatch(hideAddCardForm());
     } else {
       setError(true);
     }
   };
 
-  const services = [
-    {
-      value: 'Montaż PCV',
-      label: 'Montaż PCV',
-    },
-    {
-      value: 'Montaż ALU',
-      label: 'Montaż ALU',
-    },
-    {
-      value: 'Montaż ZABUDOWA',
-      label: 'Montaż ZABUDOWA',
-    },
-    {
-      value: 'Dostawa',
-      label: 'Dostawa',
-    },
-    {
-      value: 'Inne',
-      label: 'Inne',
-    },
-  ];
-
-  const montagesPCV = [
-    {
-      value: 'SUR',
-      label: 'Montaż surowy',
-    },
-    {
-      value: 'D + M / BO',
-      label: 'Demontaż / montaż bez obróbek',
-    },
-    {
-      value: 'D + M / SZW',
-      label: 'Demontaż / montaż / szwedzkie',
-    },
-    {
-      value: 'D + M / SK',
-      label: 'Demontaż / montaż / skrzynie',
-    },
-  ];
-
-  const montagesALU = [
-    {
-      value: 'SUR',
-      label: 'Montaż surowy',
-    },
-    {
-      value: 'D + M / BO',
-      label: 'Demontaż / montaż bez obróbek',
-    },
-    {
-      value: 'D + M / OBR',
-      label: 'Demontaż / montaż / obróbki',
-    },
-  ];
-
   return (
-    <Card {...rest} className={clsx(classes.root, className)}>
+    <Card>
       <form autoComplete="off" noValidate>
         <CardHeader
           subheader="Pola oznaczone gwiazdką * są wymagane"
@@ -241,7 +189,7 @@ const CardInputForm = props => {
                 onChange={handleChange}
                 variant="outlined"
               >
-                {services.map(option => (
+                {SERVICES.map(option => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -265,8 +213,8 @@ const CardInputForm = props => {
                 variant="outlined"
               >
                 {(values.service === 'Montaż PCV'
-                  ? montagesPCV
-                  : montagesALU
+                  ? MONTAGES_PCV
+                  : MONTAGES_ALU
                 ).map(option => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -308,7 +256,10 @@ const CardInputForm = props => {
               Proszę uzupełnić pola zaznaczone na czerwono
             </span>
           ) : null}
-          <Button variant="contained" onClick={handleDialogClose}>
+          <Button
+            variant="contained"
+            onClick={() => dispatch(hideAddCardForm())}
+          >
             Anuluj
           </Button>
           <Button color="primary" variant="contained" onClick={handleSubmit}>

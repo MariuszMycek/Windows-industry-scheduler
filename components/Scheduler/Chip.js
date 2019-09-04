@@ -1,22 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { colorsForServices } from 'utils/colorsForServices';
 import Chip from '@material-ui/core/Chip';
 import Avatar from './Avatar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   chip: styleProps => {
     const { service } = styleProps;
-    const serviceColor = colorsForServices(service);
+    const { backgroundColor, color } = colorsForServices(service);
 
     return {
       margin: 5,
       fontSize: 16,
-      backgroundColor: serviceColor.backgroundColor,
-      color: serviceColor.color,
+      backgroundColor,
+      color,
     };
   },
-}));
+});
 
 const ChipBadge = props => {
   const {
@@ -33,6 +34,12 @@ const ChipBadge = props => {
     service,
   };
 
+  const avatarProps = {
+    service,
+    confirmed,
+    reserved,
+  };
+
   const classes = useStyles(styleProps);
 
   const chipLabel = label
@@ -45,11 +52,13 @@ const ChipBadge = props => {
     <Chip
       label={chipLabel}
       classes={{ root: classes.chip }}
-      avatar={
-        <Avatar confirmed={confirmed} reserved={reserved} service={service} />
-      }
+      avatar={<Avatar {...avatarProps} />}
     />
   );
+};
+
+ChipBadge.propTypes = {
+  cardData: PropTypes.object.isRequired,
 };
 
 export default ChipBadge;

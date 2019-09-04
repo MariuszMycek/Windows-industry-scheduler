@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Chip from '../Chip';
 
 import Fade from '@material-ui/core/Fade';
+
+import { useDispatch } from 'react-redux';
+import { showAddCardForm } from 'actions/schedulerActions';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -18,7 +22,7 @@ const useStyles = makeStyles(theme => {
       minWidth: 140,
     },
     summaryWrapper: styleProps => ({
-      height: !styleProps.isExpanded ? styleProps.height : 'auto',
+      height: !styleProps.expanded ? styleProps.height : 'auto',
       minHeight: 44,
       width: '100%',
       display: 'flex',
@@ -53,15 +57,9 @@ const useStyles = makeStyles(theme => {
 });
 
 const DayHeading = props => {
-  const {
-    isExpanded,
-    i,
-    weekDay,
-    cardsData,
-    dayName,
-    isWeekend,
-    displayAddCardForm,
-  } = props;
+  const { expanded, index, weekDay, cardsData, dayName, isWeekend } = props;
+
+  const dispatch = useDispatch();
 
   const [height, setHeight] = useState(0);
   const ref = useRef(null);
@@ -75,7 +73,7 @@ const DayHeading = props => {
   const styleProps = {
     isWeekend: isWeekend(),
     height: height,
-    isExpanded,
+    expanded,
   };
 
   const classes = useStyles(styleProps);
@@ -83,23 +81,23 @@ const DayHeading = props => {
   return (
     <div className={classes.summaryWrapper}>
       <div className={classes.dayInfo}>
-        <span className={classes.dayNumber}>{i + 1}</span>
+        <span className={classes.dayNumber}>{index + 1}</span>
         <span>|</span>
         <span className={classes.weekDay}>{weekDay}</span>
       </div>
-      <Fade in={!isExpanded} unmountOnExit>
+      <Fade in={!expanded} unmountOnExit>
         <div className={classes.chips} ref={ref}>
           {cardsData.map(cardData => (
             <Chip key={cardData.id} cardData={cardData} />
           ))}
         </div>
       </Fade>
-      <Fade in={isExpanded} unmountOnExit>
+      <Fade in={expanded} unmountOnExit>
         <div className={classes.addButtonWrapper}>
           <Button
             onClick={e => {
               e.stopPropagation();
-              displayAddCardForm(dayName);
+              dispatch(showAddCardForm(dayName));
             }}
             variant="contained"
             color="primary"
@@ -111,6 +109,15 @@ const DayHeading = props => {
       </Fade>
     </div>
   );
+};
+
+DayHeading.propTypes = {
+  index: PropTypes.number.isRequired,
+  expanded: PropTypes.bool.isRequired,
+  weekDay: PropTypes.string.isRequired,
+  cardsData: PropTypes.array.isRequired,
+  dayName: PropTypes.string.isRequired,
+  isWeekend: PropTypes.func.isRequired,
 };
 
 export default DayHeading;

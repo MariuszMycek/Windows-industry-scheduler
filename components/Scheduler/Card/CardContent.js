@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { colorsForServices } from 'utils/colorsForServices';
 import CardContent from '@material-ui/core/CardContent';
 import clsx from 'clsx';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   contentRoot: {
     marginTop: 5,
   },
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     fontWeight: '500',
   },
-}));
+});
 
 const Content = props => {
   const { name, address, phone, service, additional, montage, label } = props;
@@ -91,6 +92,16 @@ const Content = props => {
       </div>
     </CardContent>
   );
+};
+
+Content.propTypes = {
+  name: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  service: PropTypes.string.isRequired,
+  additional: PropTypes.string.isRequired,
+  montage: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Content;

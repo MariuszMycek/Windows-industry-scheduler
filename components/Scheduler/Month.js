@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
 import Days from './Days';
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  paperRoot: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: 85,
@@ -18,18 +17,16 @@ const useStyles = makeStyles(theme => ({
   day: {},
 }));
 
-const Month = props => {
+const Month = () => {
   const classes = useStyles();
 
   return (
     <div>
-      <Paper className={classes.root}>
-        <Days {...props} />
+      <Paper className={classes.paperRoot}>
+        <Days />
       </Paper>
     </div>
   );
 };
-
-Month.propTypes = {};
 
 export default Month;

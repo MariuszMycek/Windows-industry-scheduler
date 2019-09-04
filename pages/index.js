@@ -54,8 +54,7 @@ export default function Index() {
             </h4>
             <h4>
               W obecnej chwili aplikacja nie jest podłączona do żadnej bazy
-              danych. Wprowadzone dane znikają po odświeżeniu strony lub
-              powrocie do strony startowej. Nie są też dostępne wszystkie
+              danych. Wprowadzone dane znikają po odświeżeniu strony. Nie są też dostępne wszystkie
               funkcjonalności przewidziane w dalszych wydaniach aplikacji.
             </h4>
           </Paper>

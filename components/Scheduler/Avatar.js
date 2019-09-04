@@ -1,22 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { colorsForServices } from 'utils/colorsForServices';
 import Avatar from '@material-ui/core/Avatar';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   avatar: styleProps => {
     const { service } = styleProps;
-    const serviceColor = colorsForServices(service);
+    const { backgroundColor, color } = colorsForServices(service);
 
     return {
       width: 32,
       height: 32,
-      backgroundColor: serviceColor.backgroundColor,
-      color: serviceColor.color,
+      backgroundColor,
+      color,
     };
   },
-}));
+});
 
 const AvatarElement = props => {
   const { confirmed, reserved, service } = props;
@@ -38,6 +39,12 @@ const AvatarElement = props => {
     ) : null;
 
   return avatar;
+};
+
+Avatar.propTypes = {
+  confirmed: PropTypes.bool,
+  reserved: PropTypes.bool,
+  service: PropTypes.string,
 };
 
 export default AvatarElement;

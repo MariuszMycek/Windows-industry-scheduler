@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Card from '../Card';
@@ -14,24 +15,24 @@ const useStyles = makeStyles({
 });
 
 const DayCards = props => {
+  const { expanded, cardsData, dayName } = props;
   const classes = useStyles();
-  const { removeCardFromDay, isExpanded, cardsData, dayName, editCard } = props;
 
   return (
-    <Fade in={isExpanded} unmountOnExit>
+    <Fade in={expanded} unmountOnExit>
       <div className={classes.cards}>
         {cardsData.map(cardData => (
-          <Card
-            key={cardData.id}
-            cardData={cardData}
-            removeCardFromDay={removeCardFromDay}
-            dayName={dayName}
-            editCard={editCard}
-          />
+          <Card key={cardData.id} cardData={cardData} dayName={dayName} />
         ))}
       </div>
     </Fade>
   );
+};
+
+DayCards.propTypes = {
+  expanded: PropTypes.bool.isRequired,
+  cardsData: PropTypes.array.isRequired,
+  dayName: PropTypes.string.isRequired,
 };
 
 export default DayCards;

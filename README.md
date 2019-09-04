@@ -2,6 +2,12 @@
 
 ## [Latest deploy(still demo)](https://window-scheduler.mmycek83.now.sh)
 
+### Main technologies: 
+- Next.js,
+- React (hooks),
+- Redux (react-redux hooks),
+- others: Material-UI, Moment.js, 
+ 
 ### Available Scripts
 
 In the project directory, you can run:

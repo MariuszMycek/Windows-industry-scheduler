@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DayHeading from './DayHeading';
 import DayCards from './DayCards';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   summaryContent: {
     margin: 0,
     position: 'relative',
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   currentDay: {
     boxShadow: '0px 0px 3px 0px #ab47bc, inset 0px 0px 8px 0px #ab47bc',
   },
-}));
+});
 
 const Day = props => {
   const { index } = props;

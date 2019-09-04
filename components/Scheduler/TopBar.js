@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     height: 64,
   },
@@ -59,6 +59,12 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '36px',
     borderRadius: 4,
   },
+  heading: {
+    marginRight: 100,
+    marginLeft: 80,
+    color: ' #fff',
+    fontSize: '2em',
+  },
 }));
 
 const TopBar = () => {
@@ -78,18 +84,18 @@ const TopBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.menuButton}>
-        <Link href="/">
-          <IconButton
-            color="inherit"
-            aria-label="menu"
-            classes={{ root: classes.iconButton }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Link>
-      </div>
       <Paper square elevation={4} classes={{ root: classes.paper }}>
+        <div className={classes.menuButton}>
+          <Link href="/">
+            <IconButton
+              color="inherit"
+              aria-label="menu"
+              classes={{ root: classes.iconButton }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Link>
+        </div>
         <Container maxWidth="lg" classes={{ root: classes.toolbar }}>
           <Button
             onClick={() => handleChangeMonth(-1)}
@@ -118,6 +124,7 @@ const TopBar = () => {
           >
             Zwiń wszystkie
           </Button>
+          <span className={classes.heading}>TERMINARZ USŁUG</span>
         </Container>
       </Paper>
     </div>

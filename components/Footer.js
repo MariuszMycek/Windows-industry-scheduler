@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
     height: 50,
     background: '#3F51B5',
@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     flexShrink: 0,
   },
-}));
+});
 
 const Footer = () => {
   const classes = useStyles();

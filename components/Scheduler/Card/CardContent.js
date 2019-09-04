@@ -5,7 +5,7 @@ import { colorsForServices } from 'utils/colorsForServices';
 import CardContent from '@material-ui/core/CardContent';
 import clsx from 'clsx';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   contentRoot: {
     marginTop: 5,
   },
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     fontWeight: '500',
   },
-}));
+});
 
 const Content = props => {
   const { name, address, phone, service, additional, montage, label } = props;

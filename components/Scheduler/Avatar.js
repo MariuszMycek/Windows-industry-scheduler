@@ -5,7 +5,7 @@ import { colorsForServices } from 'utils/colorsForServices';
 import Avatar from '@material-ui/core/Avatar';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   avatar: styleProps => {
     const { service } = styleProps;
     const { backgroundColor, color } = colorsForServices(service);
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
       color,
     };
   },
-}));
+});
 
 const AvatarElement = props => {
   const { confirmed, reserved, service } = props;

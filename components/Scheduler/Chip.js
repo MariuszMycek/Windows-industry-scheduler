@@ -5,7 +5,7 @@ import { colorsForServices } from 'utils/colorsForServices';
 import Chip from '@material-ui/core/Chip';
 import Avatar from './Avatar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   chip: styleProps => {
     const { service } = styleProps;
     const { backgroundColor, color } = colorsForServices(service);
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
       color,
     };
   },
-}));
+});
 
 const ChipBadge = props => {
   const {

@@ -2,14 +2,13 @@
 
 ## [Latest deploy(still demo)](https://window-scheduler.herokuapp.com/scheduler)
 
-### Main technologies:
-
+### Used technologies:
 - Next.js,
 - React (hooks),
 - Redux (react-redux hooks),
 - others: Material-UI, Moment.js,
 
-### Available Scripts`
+### Available Scripts
 
 In the project directory, you can run:
 

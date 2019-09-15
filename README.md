@@ -1,6 +1,6 @@
 # Windows industry scheduler
 
-## [Latest deploy(still demo)](https://window-scheduler.herokuapp.com/scheduler)
+## [Latest deploy(still demo)](https://window-scheduler.herokuapp.com)
 
 ### Used technologies:
 - Next.js,
